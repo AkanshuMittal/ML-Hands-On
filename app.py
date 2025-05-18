@@ -57,7 +57,7 @@ def crop():
     if request.method == 'POST':
         features = [float(x) for x in request.form.values()]
         prediction = crop_model.predict([np.array(features)])
-        return render_template('crop.html', prediction=prediction[0])
+        return render_template('crop.html', prediction=prediction[0].title())
     return render_template('crop.html')
 
 @app.route('/fertilizer', methods=['GET', 'POST'])
