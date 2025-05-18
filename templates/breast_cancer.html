@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Breast Cancer Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        /* Style the Google Translate widget to fit navbar */
+        #google_translate_element {
+            min-width: 120px;
+            margin-left: 10px;
+        }
+
+        .goog-te-gadget {
+            font-size: 0.95rem !important;
+            color: #fff !important;
+        }
+
+        .goog-te-gadget-simple {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+        .goog-te-menu-value {
+            color: #fff !important;
+        }
+
+        .goog-te-menu-value span {
+            color: #fff !important;
+        }
+
+        /* Hide Google Translate icon */
+        img.goog-te-gadget-icon {
+            display: none !important;
+        }
+
+        body {
+            background: url('https://c1.wallpaperflare.com/preview/540/84/931/field-agriculture-farm-landscape.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">🤖 Kisaan.AI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/faq">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Model Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <div id="google_translate_element"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white text-center">
+                <h3>🎗️ Breast Cancer Prediction</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/breast_cancer">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Mean Radius (mm)</label>
+                            <input type="number" name="mean_radius" step="any" class="form-control" required
+                                value="{{ request.form.mean_radius if request.form.mean_radius is defined else 12.45 }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mean Texture (1-100)</label>
+                            <input type="number" name="mean_texture" step="any" class="form-control" required
+                                value="{{ request.form.mean_texture if request.form.mean_texture is defined else 15.70 }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Mean Perimeter (mm)</label>
+                            <input type="number" name="mean_perimeter" step="any" class="form-control" required
+                                value="{{ request.form.mean_perimeter if request.form.mean_perimeter is defined else 82.57 }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mean Area (mm²)</label>
+                            <input type="number" name="mean_area" step="any" class="form-control" required
+                                value="{{ request.form.mean_area if request.form.mean_area is defined else 476.0 }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Mean Smoothness (0-1)</label>
+                            <input type="number" name="mean_smoothness" step="any" class="form-control" required
+                                value="{{ request.form.mean_smoothness if request.form.mean_smoothness is defined else 0.080 }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mean Compactness (perimeter² / area)</label>
+                            <input type="number" name="mean_compactness" step="any" class="form-control" required
+                                value="{{ request.form.mean_compactness if request.form.mean_compactness is defined else 0.050 }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Mean Concavity</label>
+                            <input type="number" name="mean_concavity" step="any" class="form-control" required
+                                value="{{ request.form.mean_concavity if request.form.mean_concavity is defined else 0.022 }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mean Symmetry</label>
+                            <input type="number" name="mean_symmetry" step="any" class="form-control" required
+                                value="{{ request.form.mean_symmetry if request.form.mean_symmetry is defined else 0.156 }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Mean Concave Points</label>
+                            <input type="number" name="mean_concave_points" step="any" class="form-control" required
+                                value="{{ request.form.mean_concave_points if request.form.mean_concave_points is defined else 0.020 }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mean Fractal Dimension (0-1.2)</label>
+                            <input type="number" name="mean_fractal_dimension" step="any" class="form-control" required
+                                value="{{ request.form.mean_fractal_dimension if request.form.mean_fractal_dimension is defined else 0.057 }}">
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-danger">Predict Cancer Risk</button>
+                    </div>
+                </form>
+
+                {% if result %}
+                <div
+                    class="alert mt-4 text-center {{ 'alert-danger' if result.startswith('Malignant') else 'alert-success' }}">
+                    <h5>Prediction Result: <strong>{{ result }}</strong></h5>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

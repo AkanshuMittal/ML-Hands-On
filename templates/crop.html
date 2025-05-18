@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crop Recommendation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<!-- Google Translate Script -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>
+    /* Style the Google Translate widget to fit navbar */
+    #google_translate_element {
+        min-width: 120px;
+        margin-left: 10px;
+    }
+
+    .goog-te-gadget {
+        font-size: 0.95rem !important;
+        color: #fff !important;
+    }
+
+    .goog-te-gadget-simple {
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .goog-te-menu-value {
+        color: #fff !important;
+    }
+
+    .goog-te-menu-value span {
+        color: #fff !important;
+    }
+
+    /* Hide Google Translate icon */
+    img.goog-te-gadget-icon {
+        display: none !important;
+    }
+    
+    body {
+        background: url('https://c1.wallpaperflare.com/preview/540/84/931/field-agriculture-farm-landscape.jpg') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+    }
+</style>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">🤖 Kisaan.AI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/faq">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Model Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <div id="google_translate_element"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white text-center">
+                <h3>🌾 Smart Crop Recommendation</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/crop">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Nitrogen (N)</label>
+                            <input type="number" name="N" step="0.01" class="form-control" required
+                                value="{{ request.form.N if request.form.N is defined else '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Phosphorous (P)</label>
+                            <input type="number" name="P" step="0.01" class="form-control" required
+                                value="{{ request.form.P if request.form.P is defined else '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Potassium (K)</label>
+                            <input type="number" name="K" step="0.01" class="form-control" required
+                                value="{{ request.form.K if request.form.K is defined else '' }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Temperature (°C)</label>
+                            <input type="number" name="temperature" step="0.01" class="form-control" required
+                                value="{{ request.form.temperature if request.form.temperature is defined else '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Humidity (%)</label>
+                            <input type="number" name="humidity" step="0.01" class="form-control" required
+                                value="{{ request.form.humidity if request.form.humidity is defined else '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">pH Level (1-14)</label>
+                            <input type="number" name="ph" step="0.01" class="form-control" required
+                                value="{{ request.form.ph if request.form.ph is defined else '' }}">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Rainfall (mm)</label>
+                        <input type="number" name="rainfall" step="0.01" class="form-control" required
+                            value="{{ request.form.rainfall if request.form.rainfall is defined else '' }}">
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Predict Recommended Crop</button>
+                    </div>
+                </form>
+
+                {% if prediction %}
+                <div class="alert alert-info text-center mt-4">
+                    <h5>Recommended Crop: <strong>{{ prediction }}</strong></h5>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

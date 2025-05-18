@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crop Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<!-- Google Translate Script -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>
+    /* Style the Google Translate widget to fit navbar */
+    #google_translate_element {
+        min-width: 120px;
+        margin-left: 10px;
+    }
+
+    .goog-te-gadget {
+        font-size: 0.95rem !important;
+        color: #fff !important;
+    }
+
+    .goog-te-gadget-simple {
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .goog-te-menu-value {
+        color: #fff !important;
+    }
+
+    .goog-te-menu-value span {
+        color: #fff !important;
+    }
+
+    /* Hide Google Translate icon */
+    img.goog-te-gadget-icon {
+        display: none !important;
+    }
+    
+    body {
+        background: url('https://c1.wallpaperflare.com/preview/540/84/931/field-agriculture-farm-landscape.jpg') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+    }
+</style>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">🤖 Kisaan.AI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/faq">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Model Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <div id="google_translate_element"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white text-center">
+                <h3>🌾 Crop Price Prediction</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/crop_price">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="State" class="form-label">State</label>
+                            <select name="State" class="form-select" required>
+                                <option disabled {% if not request.form.get('State') %}selected{% endif %}>-- Select
+                                    State
+                                    --</option>
+                                {% for state in states %}
+                                <option value="{{ state }}" {% if request.form.get('State')==state %}selected{% endif
+                                    %}>
+                                    {{ state }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Crop" class="form-label">Crop</label>
+                            <select name="Crop" class="form-select" required>
+                                <option disabled {% if not request.form.get('Crop') %}selected{% endif %}>-- Select Crop
+                                    --</option>
+                                {% for crop in crops %}
+                                <option value="{{ crop }}" {% if request.form.get('Crop')==crop %}selected{% endif %}>
+                                    {{ crop }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Direct Expense (₹)</label>
+                            <input type="number" step="0.01" name="CostCultivation" class="form-control"
+                                placeholder="Seeds, Fertilizers, Pesticides etc." required
+                                value="{{ request.form.CostCultivation if request.form.CostCultivation is defined else '' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Side Expenses (₹)</label>
+                            <input type="number" step="0.01" name="CostCultivation2" class="form-control"
+                                placeholder="Rent on owned land, Interest on fixed capital" required
+                                value="{{ request.form.CostCultivation2 if request.form.CostCultivation2 is defined else '' }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Production (Quintal)</label>
+                            <input type="number" step="0.01" name="Production" class="form-control" required
+                                value="{{ request.form.Production if request.form.Production is defined else '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Yield (Quintal/ha)</label>
+                            <input type="number" step="0.01" name="Yield" class="form-control" required
+                                value="{{ request.form.Yield if request.form.Yield is defined else '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Temperature (°C)</label>
+                            <input type="number" step="0.01" name="Temperature" class="form-control" required
+                                value="{{ request.form.Temperature if request.form.Temperature is defined else '' }}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Annual Rainfall (mm)</label>
+                        <input type="number" step="0.01" name="RainFall_Annual" class="form-control" required
+                            value="{{ request.form.RainFall_Annual if request.form.RainFall_Annual is defined else '' }}">
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Predict Price</button>
+                    </div>
+                </form>
+
+                {% if prediction %}
+                <div class="alert alert-info text-center mt-4">
+                    <h5>💰 Predicted Crop Price: ₹ {{ prediction }} per Quintal</h5>
+                    {% if request.form.CostCultivation and request.form.CostCultivation2 %}
+                    {% set total_expense = (request.form.CostCultivation | float) + (request.form.CostCultivation2 |
+                    float) %}
+                    {% set profit = (prediction | float) - total_expense %}
+                    <div class="mt-3">
+                        <strong>Profit Margin per Quintal = Predicted Price – Total Expense</strong><br>
+                        <span>
+                            Profit Margin per Quintal = ₹{{ prediction }} – ₹({{ request.form.CostCultivation }} + {{
+                            request.form.CostCultivation2 }}) =
+                            ₹{{ '%.2f' % profit }}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fertilizer Suggestion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5 CDN for consistency -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://c1.wallpaperflare.com/preview/540/84/931/field-agriculture-farm-landscape.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+
+        /* Style the Google Translate widget to fit navbar */
+        #google_translate_element {
+            min-width: 120px;
+            margin-left: 10px;
+        }
+        .goog-te-gadget {
+            font-size: 0.95rem !important;
+            color: #fff !important;
+        }
+        .goog-te-gadget-simple {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+        .goog-te-menu-value {
+            color: #fff !important;
+        }
+        .goog-te-menu-value span {
+            color: #fff !important;
+        }
+        /* Hide Google Translate icon */
+        img.goog-te-gadget-icon {
+            display: none !important;
+        }
+
+        .card {
+            border-radius: 1rem;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">🤖 Kisaan.AI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/faq">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Model Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <div id="google_translate_element"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h2 class="mb-0">🧪 Fertilizer Recommendation System</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Temperature (°C)</label>
+                            <input type="number" step="0.01" class="form-control" name="temperature" required
+                                value="{{ request.form.temperature if request.form.temperature is defined else '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Moisture (%)</label>
+                            <input type="number" step="0.01" class="form-control" name="moisture" required
+                                value="{{ request.form.moisture if request.form.moisture is defined else '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Rainfall (mm)</label>
+                            <input type="number" step="0.01" class="form-control" name="rainfall" required
+                                value="{{ request.form.rainfall if request.form.rainfall is defined else '' }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label class="form-label">pH (1-14)</label>
+                            <input type="number" step="0.01" class="form-control" name="ph" required
+                                value="{{ request.form.ph if request.form.ph is defined else '' }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Nitrogen (N)</label>
+                            <input type="number" step="0.01" class="form-control" name="nitrogen" required
+                                value="{{ request.form.nitrogen if request.form.nitrogen is defined else '' }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Phosphorous (P)</label>
+                            <input type="number" step="0.01" class="form-control" name="phosphorous" required
+                                value="{{ request.form.phosphorous if request.form.phosphorous is defined else '' }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Potassium (K)</label>
+                            <input type="number" step="0.01" class="form-control" name="potassium" required
+                                value="{{ request.form.potassium if request.form.potassium is defined else '' }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Carbon (%)</label>
+                            <input type="number" step="0.01" class="form-control" name="carbon" required
+                                value="{{ request.form.carbon if request.form.carbon is defined else '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Soil Type</label>
+                            <select name="Soil" class="form-select" required>
+                                <option disabled {% if not request.form.get('Soil') %}selected{% endif %}>-- Select soil
+                                    --
+                                </option>
+                                {% for soil in soils %}
+                                <option value="{{ soil }}" {% if request.form.get('Soil')==soil %}selected{% endif %}>
+                                    {{ soil }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Crop</label>
+                            <select name="Crop" class="form-select" required>
+                                <option disabled {% if not request.form.get('Crop') %}selected{% endif %}>-- Select Crop
+                                    --</option>
+                                {% for crop in crops %}
+                                <option value="{{ crop }}" {% if request.form.get('Crop')==crop %}selected{% endif %}>
+                                    {{ crop }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Suggest Fertilizer</button>
+                    </div>
+                </form>
+
+                {% if prediction %}
+                <div class="card mt-4 shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">Recommended Fertilizer: <strong class="text-primary">{{ prediction
+                                }}</strong>
+                        </h4>
+                        <p class="card-text text-muted"><strong>{{ remark }}</strong></p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap 5 JS (optional, for navbar toggling) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
