@@ -14,7 +14,7 @@ Each folder in the repository represents a self-contained **ML-powered feature**
 - 🎨 A frontend webpage to interact with the feature
 - 🧩 A card linked from the central `index.html` for navigation
 
-### Sample Feature Ideas:
+### Our Feature Ideas:
 - 🌾 Crop Recommendation
 - 💰 Crop Price Prediction
 - 🧪 Fertilizer Recommendation
