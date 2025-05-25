@@ -1,4 +1,4 @@
-# ML Features Hub - Practice Projects using Flask
+# ML Features Hub - Flask Projects
 
 Welcome to the **ML Features Hub**, a collaborative repository where we — a team of friends and developers — practice and explore **Machine Learning-based features** by building small, focused web applications. Each feature solves a specific problem and is deployed as an independent **webpage**, all neatly accessible from a **central homepage with linked cards**.
 
