@@ -4,8 +4,6 @@ Welcome to the **ML Features Hub**, a collaborative repository where we — a te
 
 This repository is designed for **learning, experimentation, and collaboration** — with a focus on practical ML implementation using a **Flask-based backend**.
 
----
-
 ## 🚀 Features
 
 Each folder in the repository represents a self-contained **ML-powered feature** that includes:
@@ -20,35 +18,50 @@ Each folder in the repository represents a self-contained **ML-powered feature**
 - 🧪 Fertilizer Recommendation
 - 🦠 Disease Prediction (e.g., for crops or humans)
 - 🎗️ Breast Cancer Prediction
-
 > Each of these is a standalone module but shares the same structure and homepage for a seamless experience.
 
----
-
 ## 🛠️ Tech Stack
-
 - **Backend**: Python, Flask
 - **Frontend**: HTML, CSS, JavaScript
 - **Machine Learning**: TensorFlow / Scikit-learn / PyTorch (varies per feature)
 - **Model Deployment**: Served via Flask routes
 - **UI**: Linked cards for each feature from `index.html`
 
----
-
 ## 📂 Repository Structure
-
-```plaintext
-├── static/                  # Shared static files (CSS/JS)
+ML-Hands-On/
+│
+├── app.py                  # Main Flask application
+├── analytics/              # Model metrics (JSON)
+├── dataset/                # Datasets for training
+├── disease.py              # Disease prediction logic
+├── mapping.py              # Analytics data mapping
+├── maps/                   # Model plots (PNG)
+├── model/                  # Trained ML models (pickle files)
+├── static/
+│   ├── audio/              # Generated audio files
+│   └── img/                # Images and videos
 ├── templates/
-│   ├── index.html           # Home page with all feature cards
-│   ├── <feature>.html       # Pages for each feature
-├── features/
-│   ├── crop_recommendation/
-│   │   ├── app.py
-│   │   ├── model/
-│   │   ├── templates/
-│   │   └── static/
-│   ├── crop_price_prediction/
-│   ├── ...
-├── README.md
-└── requirements.txt
+│   ├── index.html          # Home Page
+│   ├── ...All ML Projects
+│   ├── analytics.html      # Analytics Map
+│   ├── faq.html
+│   └── about.html
+├── kisaan_env/             # Virtual Environment
+└── README.md
+
+## 🤝 Collaborators
+
+- **Name:** Abhay Kushwaha (2202900100006)
+- **Role:** Backend, AI/ML Engineer
+- **LinkedIn:** https://www.linkedin.com/in/abhay-k-5a0902278/
+- **GitHub:** https://github.com/Abhay-Kushwaha
+---
+- **Name:** Aakash Jha (2202900100001)
+- **Role:** Backend, AI/ML Engineer
+- **LinkedIn:** https://www.linkedin.com/in/aakash-jha-a11931257/
+- **GitHub:** https://github.com/Aakash-Jha3903
+---
+- **Name:** Akanshu Mittal (2202900100019)
+- **Role:** Frontend, AI/ML Engineer
+- **LinkedIn:** https://www.linkedin.com/in/akanshu-mittal-527130251/
+- **GitHub:** https://github.com/AkanshuMittal
